@@ -1,5 +1,3 @@
-let winsArr = []
-
 function computerPlay() {
     let num = Math.floor(Math.random() * 3)
     
