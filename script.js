@@ -146,4 +146,23 @@ function game() {
 
 }
 
-game()
+// game()
+
+// Query all buttons and loop over to add appropriate eventListener
+const buttons = document.querySelectorAll('.btn')
+buttons.forEach(button => {
+    // get 'id' of button to determine what event listener to add
+    let id = button.getAttribute('id')
+    
+    if (id === 'start') {
+        button.addEventListener('click', () => {
+            game()
+        })
+    } else {
+        button.addEventListener('click', () => {
+            console.log(id)
+        })
+    }
+})
+
+console.log(buttons)
