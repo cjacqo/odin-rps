@@ -12,7 +12,7 @@
     <title>Odin | Rock Paper Scissors</title>
 </head>
 <body>
-    <div class="relative-parent">
+    <div class="relative-parent flex c">
 
         <!-- Page Title Container -->
         <div class="page-title container">
@@ -56,9 +56,32 @@
 
         <!-- Playable Area -->
         <div class="gamearea parent">
-            <button class="btn user-choice" id="rock"><i class="fa-solid fa-hand-back-fist"></i></button>
-            <button class="btn user-choice" id="paper"><i class="fa-solid fa-hand"></i></button>
-            <button class="btn user-choice" id="scissors"><i class="fa-solid fa-hand-peace"></i></button>
+            <!-- 2 Row Grid -->
+            <div class="grid">
+                <!-- Animate Game Play Container -->
+                <div class="game-play container flex">
+                    <!-- Player Hand Area -->
+                    <div class="hand-area container flex" id="playerHand">
+                        Hi
+                    </div>
+
+                    <!-- Absolute Dashed Line -->
+                    <div class="absolute dashed-line"></div>
+                    
+                    <!-- Computer Hand Area -->
+                    <div class="hand-area container flex" id="computerHand">
+                        Hi
+                    </div>
+                </div>
+                <!-- User Choices Container -->
+                <div class="user-choices container">
+                    <div class="wrapper">
+                        <button class="btn user-choice" id="rock"><i class="fa-solid fa-hand-back-fist"></i></button>
+                        <button class="btn user-choice" id="paper"><i class="fa-solid fa-hand"></i></button>
+                        <button class="btn user-choice" id="scissors"><i class="fa-solid fa-hand-peace"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src='script.js'></script>

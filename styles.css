@@ -15,7 +15,7 @@ html {
 body {
     margin: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }
 
 .parent-relative {
@@ -64,8 +64,9 @@ input:focus {
 }
 
 .relative-parent {
+    position: relative;
     height: 100%;
-    background-color: #E6EBE0;
+    /* background-color: #E6EBE0; */
 }
 
 /*
@@ -263,13 +264,84 @@ input:focus {
     font-size: 2.441em;
 }
 
-/* - Game Area Parent - */
+/* --- Game Area Parent --- */
 .gamearea.parent {
-    position: relative;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
     height: 100%;
-    background-color: red;
+    background-color: rgba(202,240,248,1);
+}
+
+.gamearea.parent > .grid {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
+/* - play area */
+/*    + this is where the shaking hand and countdown goes */
+.game-play.container {
+    position: relative;
+    background: #caf0f4;
+    box-shadow: inset 9.31px 9.31px 6px #B6D8DC,
+                inset -9.31px -8.31px 6px #aed7db;
+
+    /* inset -9.31px -9.31px 1px #d0ffff; */
+}
+
+.game-play.container > * {
+    flex: 1;
+}
+
+.hand-area.container {
+    padding: 0.75rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.absolute.dashed-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+
+    border: 5px dashed rgba(255,255,255,0.45);
+    border-radius: 10px;
+}
+
+/* - user choices */
+.user-choices.container {
+    grid-row: 2 / 3;
+    justify-items: center;
+    background-color: rgba(2, 62, 138, 1);
+}
+
+.user-choices.container > .wrapper {
+    text-align: center;
+    display: flex;
+}
+
+.user-choice {
+    cursor: pointer;
+    flex: 1;
+    background-color: transparent;
+    transition: all 300ms ease-in-out;
+}
+
+.user-choice:hover {
+    background-color: rgba(255,255,255,0.125);
+    transition: all 300ms ease-in-out;
+}
+
+.user-choice > i {
+    padding: 1rem 0.35rem;
+    font-size: 3.485rem;
+    color: #E6EBE0;
+}
+
+.fa-hand-back-fist {
+    transform: rotate(90deg);
+}
+
+.fa-hand-peace {
+    transform: rotate(50deg);
 }
