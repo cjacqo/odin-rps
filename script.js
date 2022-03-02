@@ -5,44 +5,51 @@ const statusColors = {
     error  : 'rgba(234,22,1,1)'
 }
 
+// RPS
+const choicesArr = ['rock', 'paper', 'scissors']
+
 // DEFAULT VALUES
 let roundCount
-let userChoice
+// let userChoice = false
+let computerChoice
 
 function computerPlay() {
     let num = Math.floor(Math.random() * 3)
     
-    switch(num) {
-        case 0:
-            return 'rock'
-        case 1:
-            return 'paper'
-        case 2: 
-            return 'scissors'
-        default:
-            return
-    }
+    return choicesArr[num]
 }
 
-function shoot(playerSelection, computerSelection) {
-    if (playerSelection === computerSelection) {
+function userPlay() {
+    rockButton.addEventListener("click", function() {
+        userChoice = 'rock'
+    })
+    paperButton.addEventListener("click", function() { 
+        userChoice = 'paper'
+    })
+    scissorsButton.addEventListener("click", function() { 
+        userChoice = 'scissors'
+    })
+}
+
+function shoot(userChoice, computerChoice) {
+    if (userChoice === computerChoice) {
         return 'tie'
-    } else if (playerSelection === 'rock') {
-        if (computerSelection === 'paper') {
+    } else if (userChoice === 'rock') {
+        if (computerChoice === 'paper') {
             return 'computer'
-        } else if (computerSelection === 'scissors') {
-            return 'player'
+        } else if (computerChoice === 'scissors') {
+            return 'user'
         }
-    } else if (playerSelection === 'paper') {
-        if (computerSelection === 'rock') {
-            return 'player'
-        } else if (computerSelection === 'scissors') {
+    } else if (userChoice === 'paper') {
+        if (computerChoice === 'rock') {
+            return 'user'
+        } else if (computerChoice === 'scissors') {
             return 'computer'
         }
-    } else if (playerSelection === 'scissors') {
-        if (computerSelection === 'paper') {
-            return 'player'
-        } else if (computerSelection === 'rock') {
+    } else if (userChoice === 'scissors') {
+        if (computerChoice === 'paper') {
+            return 'user'
+        } else if (computerChoice === 'rock') {
             return 'computer'
         }
     }
@@ -50,17 +57,17 @@ function shoot(playerSelection, computerSelection) {
 
 function checkWinner(arr) {
     let computerScore = 0
-    let playerScore = 0
+    let userScore = 0
 
     for (let i = 0; i < arr.length; i++) {
         if (arr[i] === 'computer') {
             computerScore++
         } else (
-            playerScore++
+            userScore++
         )
     }
 
-    if (computerScore > playerScore) {
+    if (computerScore > userScore) {
         return 'Sorry, you lose!'
     } else {
         return 'YAY! You won! (:'
@@ -96,99 +103,81 @@ function getRoundsArr(num) {
     return arr
 }
 
-function startRound(round, roundNum, isTie) {
-    let result
+// function startRound(round, roundNum, isTie) {
+//     let result
     
-    // get computer and player selections
-    const computerSelection = computerPlay()
-    const playerSelection = userPrompt(roundNum, isTie)
+//     // get computer and player selections
+//     const computerSelection = computerPlay()
+//     const playerSelection = userPrompt(roundNum, isTie)
 
-    // once selections are made, SHOOT
-    result = shoot(computerSelection, playerSelection)
+//     // once selections are made, SHOOT
+//     result = shoot(computerSelection, playerSelection)
 
-    if (result !== 'tie') {
-        return result
-    } else {
-        startRound(round, roundNum, true)
-    }
+//     if (result !== 'tie') {
+//         return result
+//     } else {
+//         startRound(round, roundNum, true)
+//     }
+// }
+
+function getVictor() {
+    console.log('hdf')
 }
 
-function game(roundCount) {
+// Add events to user choices
+function getTheChoice(theChoice) {
+    console.log(theChoice)
+    return theChoice
+}
+
+// async function getRoundChoices(round) {
+//     let choices = {
+//         userChoice: '',
+//         computerChoice: computerPlay()
+//     }
+//     buttons.forEach(button => {
+//         button.addEventListener('click', (e) => {
+//             e.stopPropagation()
+//             choices.userChoice = e.target.value
+//         }, true)
+//     })
+//     return choices
+// }
+
+async function game(roundCount) {
     // Variables
-    let roundsSet = false
     let roundsArr = getRoundsArr(roundCount)
-    let currentRound = 1
-    let results
-    let winner
+    let selected = false
     let gameOver = false
+    let userChoice
+    let computerChoice
+    let roundResult
 
-    roundsArr.map((round, index) => {
-        let currentRound = index + 1
-        let complete = false
-        userChoice = ''
+    async function onClick(e) {
+        // --- sets the user choice and computer choice
+        //      !!! needs to fix propagation of child elements
+        let user = await e.target.value
+        let computer = computerPlay()
+        let result = shoot(user, computer)
+        console.log(result)
+        return result
+    }
 
-        if (!complete) {
-            // get choices
-            let computerSelection = computerPlay()
-            let userSelection = getUserSelection()
-            // userChoicesContainer.classList.remove('active')
-            console.log("Hi")
-        }
-        // wait for user selection
-        return 
-    })
+    let test = document.getElementById('userChoiceButtons')
+    for (round in roundsArr) {
+        test.addEventListener('click', onClick, true)
 
-    // for (let i = currentRound - 1; i < roundCount; i++) {
-    //     let complete = false
-        
-    //     // Get choices
-    //     let computerSelection = computerPlay()
-    //     let userSelection = getUserSelection()
-    //     console.log(userChoice)
-        
+    }
+    
+    
+
+    // Loop through rounds
+    // for (round in roundsArr) {
+    //     userPlay()
+    //     computerPlay()
+
     // }
 
-    // Loop for roundCount passed in
-    
-    // Whens roundsArr is set, map through each to play each round
-    // roundsArr.map((round, index) => {
-    //     let currentRound = index + 1
-    //     let complete = false
-
-    //     if (userChoice) {
-    //         userChoicesContainer.classList.remove('active')
-    //         console.log("Hi")
-    //     }
-    //     // wait for user selection
-    //     return 
-    // })
-
-    // When roundsArr is set with rounds, call function to initialize game prompts
-    // let roundResults = roundsArr.map((round, index) => {
-    //     let currentRound = index + 1
-    //     return startRound(round, currentRound, round.isTie)
-    // })
-
-    // winner = checkWinner(roundResults)
-
-    // Alert window of winner
-    // window.alert(winner)
-
-    // Play again?
-    // let playAgain = window.prompt('Play again? yes or no', 'no')
-
-    if (playAgain === 'no') {
-        gameOver = true
-        return
-    } else {
-        game()
-    }
-
-}
-
-function setUserChoice(choice) {
-    userChoice = choice
-    return
 }
 
 // Query the absolute.parent and the init container
@@ -227,20 +216,19 @@ radioInputs.forEach(radio => {
 // Query the user choices container
 const userChoicesContainer = document.querySelector('.user-choices.container')
 
+function capture(e) {
+    e.stopPropagation()
+    return e.target.value
+}
 // Query all buttons for user choice
 const buttons = document.querySelectorAll('.btn.user-choice')
 
-// Function for getting user choice
-// --- loops through user-choice DOM elements, then returns a promise
-buttons.forEach(button => {
-    button.addEventListener('click', function(e) {
-        getUserSelection(button.value)
-    })
-})
+const rockButton = document.getElementById('rock')
+const paperButton = document.getElementById('paper')
+const scissorsButton = document.getElementById('scissors')
 
-async function getUserSelection(selection) {
-    return await selection
-}
+// Query shoot button
+const shootButton = document.querySelector('.btn.shoot')
 
 // START BUTTON ELEMENT
 const startButton = document.getElementById('start')
