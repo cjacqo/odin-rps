@@ -180,9 +180,10 @@ function game(roundCount) {
                 userHandContainer.classList.remove('active')
                 computerHandContainer.classList.remove('active')
                 if (result !== 'tie') {
-                    roundCount = roundCount - 1
+                    let currentRound = parseInt(roundCountText.innerHTML)
+                    console.log(currentRound)
                     // --- set round number from roundCount
-                    roundCountText.innerHTML = roundCount
+                    roundCountText.innerHTML = currentRound + 1
                     
                     userArea.classList.add(`${result === 'user' ? 'win' : 'loss'}`)
                     computerArea.classList.add(`${result === 'computer' ? 'win' : 'loss'}`)
