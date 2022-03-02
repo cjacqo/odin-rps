@@ -7,6 +7,11 @@ const statusColors = {
 
 // RPS
 const choicesArr = ['rock', 'paper', 'scissors']
+const iconsArr = [
+    `<i class="fa-solid fa-hand-back-fist" value="rock"></i>`,
+    `<i class="fa-solid fa-hand" value="paper"></i>`,
+    `<i class="fa-solid fa-hand-peace" value="scissors"></i>`
+]
 
 // DEFAULT VALUES
 let roundCount
@@ -32,6 +37,7 @@ function userPlay() {
 }
 
 function shoot(userChoice, computerChoice) {
+    
     if (userChoice === computerChoice) {
         return 'tie'
     } else if (userChoice === 'rock') {
@@ -144,7 +150,18 @@ function getTheChoice(theChoice) {
 //     return choices
 // }
 
-async function game(roundCount) {
+// Swap out the hand icons based on selection
+// --- happens after animation completes
+function appendHandChoices(user, computer) {
+    console.log(user)
+    console.log(computer)
+    let userIconIndex = user === 'rock' ? iconsArr[0] : user === 'paper' ? iconsArr[1] : iconsArr[2]
+    let computerIconIndex = computer === 'rock' ? iconsArr[0] : computer === 'paper' ? iconsArr[1] : iconsArr[2]
+    userHandContainer.innerHTML = userIconIndex
+    computerHandContainer.innerHTML = computerIconIndex
+}
+
+function game(roundCount) {
     // Variables
     let roundsArr = getRoundsArr(roundCount)
     let selected = false
@@ -154,38 +171,37 @@ async function game(roundCount) {
     let computerChoice
     let roundResult
 
-    async function onClick(e) {
+    function onClick(e) {
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
         answerClicked = true
-        let user = await e.target.value
+        let user = e.target.value
         let computer = computerPlay()
-        let result = shoot(user, computer)
+        // toggle active class to play shake animate on hand containers,
+        // --- as well as the user choices section
+        userHandContainer.classList.toggle('active')
+        computerHandContainer.classList.toggle('active')
+        userChoicesContainer.classList.remove('active')
 
-        // --- depending on result, call function for animations, and
-        //     class add/removal to disable/enable certain things
-        if (result !== 'tie') {
-            userChoicesContainer.classList.toggle('active')
-        }
-        console.log(result)
+        setTimeout(function() {
+            result = shoot(user, computer)
+
+            // call function to change icons, and background
+            // --- colors of player areas
+            appendHandChoices(user, computer)
+            userArea.classList.toggle(`${result === 'user' ? 'win' : 'loss'}`)
+            computerArea.classList.toggle(`${result === 'computer' ? 'win' : 'loss'}`)
+
+            if (result !== 'tie') {
+                userChoicesContainer.classList.toggle('active')
+            }
+        }, 1500)
+
         return result
     }
 
     let test = document.getElementById('userChoiceButtons')
-    test.addEventListener('click', await onClick, true)
-
-    
-    if (answerClicked) {
-        console.log("Hi")
-    }
-    
-
-    // Loop through rounds
-    // for (round in roundsArr) {
-    //     userPlay()
-    //     computerPlay()
-
-    // }
+    test.addEventListener('click', onClick, true)
 
 }
 
@@ -261,3 +277,11 @@ startButton.addEventListener('click', () => {
         game(roundCount)
     }, 700);
 })
+
+// Query for player areas (full sections with half width)
+const userArea = document.getElementById('userArea')
+const computerArea = document.getElementById('computerArea')
+
+// Query for hand-containers
+const userHandContainer = document.getElementById('userHand')
+const computerHandContainer = document.getElementById('computerHand')

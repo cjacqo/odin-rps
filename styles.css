@@ -94,7 +94,7 @@ input:focus {
     width: 100%;
     height: 50%;
     background-color: #E6EBE0;
-    z-index: 2;
+    z-index: 4;
 }
 
 .absolute.half.top {
@@ -110,7 +110,7 @@ input:focus {
     padding: 1.275rem 0.833rem;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 5;
 }
 
 .starter-box {
@@ -255,7 +255,7 @@ input:focus {
     margin: 0 auto;
     text-align: center;
     position: relative;
-    z-index: 3;
+    z-index: 5;
 }
 
 .page-title.container > h3 {
@@ -297,6 +297,14 @@ input:focus {
     align-items: center;
 }
 
+.win {
+    background-color: green;
+}
+
+.loss {
+    background-color: red;
+}
+
 .lives.container {
 
 }
@@ -310,10 +318,9 @@ input:focus {
 
 .hand-area.container.active {
     animation-name: shake;
-    animation-duration: 1000ms;
+    animation-duration: 500ms;
     animation-timing-function: ease-in-out;
     animation-fill-mode: both;
-    animation-delay: 3000ms;
     animation-iteration-count: 3;
 }
 
@@ -344,6 +351,7 @@ input:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 3;
 }
 
 .absolute.shoot.container {
