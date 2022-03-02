@@ -308,6 +308,27 @@ input:focus {
     transform: translate(-50%, -50%);
 }
 
+.hand-area.container.active {
+    animation-name: shake;
+    animation-duration: 1000ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-delay: 3000ms;
+    animation-iteration-count: 3;
+}
+
+@keyframes shake {
+    0%, 100% {
+        top: 50%;
+    }
+    50% {
+        top: 30%;
+    }
+    95% {
+        top: 55%;
+    }
+}
+
 .hand-area > i {
     font-size: 6.172rem;
 }

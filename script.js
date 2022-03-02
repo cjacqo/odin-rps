@@ -149,6 +149,7 @@ async function game(roundCount) {
     let roundsArr = getRoundsArr(roundCount)
     let selected = false
     let gameOver = false
+    let answerClicked = false
     let userChoice
     let computerChoice
     let roundResult
@@ -156,19 +157,27 @@ async function game(roundCount) {
     async function onClick(e) {
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
+        answerClicked = true
         let user = await e.target.value
         let computer = computerPlay()
         let result = shoot(user, computer)
+
+        // --- depending on result, call function for animations, and
+        //     class add/removal to disable/enable certain things
+        if (result !== 'tie') {
+            userChoicesContainer.classList.toggle('active')
+        }
         console.log(result)
         return result
     }
 
     let test = document.getElementById('userChoiceButtons')
-    for (round in roundsArr) {
-        test.addEventListener('click', onClick, true)
+    test.addEventListener('click', await onClick, true)
 
-    }
     
+    if (answerClicked) {
+        console.log("Hi")
+    }
     
 
     // Loop through rounds
@@ -249,6 +258,6 @@ startButton.addEventListener('click', () => {
     // Set timeout to unappend initContainer from DOM
     setTimeout(() => {
         overlayParent.remove()
+        game(roundCount)
     }, 700);
-    game(roundCount)
 })
