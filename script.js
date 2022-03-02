@@ -12,6 +12,7 @@ const iconsArr = [
     `<i class="fa-solid fa-hand" value="paper"></i>`,
     `<i class="fa-solid fa-hand-peace" value="scissors"></i>`
 ]
+const heartIcon = `<i class="fa-solid fa-heart"></i>`
 
 // DEFAULT VALUES
 let roundCount
@@ -108,11 +109,51 @@ function setDefault() {
     computerHandContainer.innerHTML = iconsArr[0]
 }
 
+// Create divs
+function createIconDiv(count) {
+    let livesParent = document.createElement("div")
+    livesParent.classList.add("lives", "wrapper", "flex")
+    let arr = []
+
+    for (let i = 0; i < count; i++) {
+        let icon = document.createElement('i')
+        icon.classList.add("fa-solid", "fa-heart")
+        arr.push(icon)
+    }
+
+    let nodes = arr.map(i => {
+        return i
+    })
+
+    livesParent.append(...nodes)
+    return livesParent
+}
+
 function game(roundCount) {
     // Variables
     let answerClicked = false
     let winners = []
+    let userLives = []
+    let computerLives = []
 
+    // create lives containers
+    let theUsersLives = document.createElement("div")
+    let theComputersLives = document.createElement("div")
+    theUsersLives.classList.add('lives', 'container', 'flex')
+    theComputersLives.classList.add('lives', 'container', 'flex')
+
+    let userLivesParent = createIconDiv(roundCount)
+    let computerLivesParent = createIconDiv(roundCount)
+
+    // mount livesParent containers to DOM
+    userLivesContainer.appendChild(userLivesParent)
+    computerLivesContainer.appendChild(computerLivesParent)
+
+    // let parentDiv = createIconDiv(roundCount)
+    // computerLivesContainer.appendChild(parentDiv)
+
+    // userArea.appendChild(theUsersLives)
+    
     function onClick(e) {
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
@@ -140,6 +181,9 @@ function game(roundCount) {
                 computerHandContainer.classList.remove('active')
                 if (result !== 'tie') {
                     roundCount = roundCount - 1
+                    // --- set round number from roundCount
+                    roundCountText.innerHTML = roundCount
+                    
                     userArea.classList.add(`${result === 'user' ? 'win' : 'loss'}`)
                     computerArea.classList.add(`${result === 'computer' ? 'win' : 'loss'}`)
                     console.log(roundCount)
@@ -236,3 +280,10 @@ const computerArea = document.getElementById('computerArea')
 // Query for hand-containers
 const userHandContainer = document.getElementById('userHand')
 const computerHandContainer = document.getElementById('computerHand')
+
+// Query for round count h4
+const roundCountText = document.getElementById('currentRound')
+
+// Query for lives containers
+const userLivesContainer = document.getElementById('userLives')
+const computerLivesContainer = document.getElementById('computerLives')

@@ -306,7 +306,21 @@ input:focus {
 }
 
 .lives.container {
+    width: 100%;
+    height: 50px;
+}
 
+.lives.wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.lives.wrapper > i {
+    font-size: 1.77rem;
 }
 
 .hand-area.container {
