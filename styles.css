@@ -298,11 +298,11 @@ input:focus {
 }
 
 .win {
-    background-color: green;
+    background-color: rgba(107, 219, 158, 0.75);
 }
 
 .loss {
-    background-color: red;
+    background-color: rgba(231, 95, 104, 0.75);
 }
 
 .lives.container {
@@ -351,7 +351,7 @@ input:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 3;
+    z-index: 2;
 }
 
 .absolute.shoot.container {

@@ -161,48 +161,78 @@ function appendHandChoices(user, computer) {
     computerHandContainer.innerHTML = computerIconIndex
 }
 
+// Set default classes
+function setDefault() {
+    // toggle active class to play shake animate on hand containers,
+    // --- as well as the user choices section and
+    userArea.classList.remove('win', 'loss')
+    computerArea.classList.remove('win', 'loss')
+    userHandContainer.classList.add('active')
+    computerHandContainer.classList.add('active')
+    userChoicesContainer.classList.remove('active')
+    userHandContainer.innerHTML = iconsArr[0]
+    computerHandContainer.innerHTML = iconsArr[0]
+}
+
 function game(roundCount) {
     // Variables
     let roundsArr = getRoundsArr(roundCount)
     let selected = false
     let gameOver = false
     let answerClicked = false
+    let roundsLeft = roundCount
     let userChoice
     let computerChoice
     let roundResult
+    let winners = []
 
     function onClick(e) {
+        // --- copy the roundsArr
+        let copyRoundsArr = roundsArr
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
         answerClicked = true
         let user = e.target.value
         let computer = computerPlay()
-        // toggle active class to play shake animate on hand containers,
-        // --- as well as the user choices section
-        userHandContainer.classList.toggle('active')
-        computerHandContainer.classList.toggle('active')
-        userChoicesContainer.classList.remove('active')
 
-        setTimeout(function() {
-            result = shoot(user, computer)
+        // --- check that all the rounds have been played
+        //     if yes, remove eventListener
+        if (roundCount === 0) {
+            test.removeEventListener('click', onClick)
+            return
+        } else {
+            // Function to set classes to default
+            setDefault()
 
-            // call function to change icons, and background
-            // --- colors of player areas
-            appendHandChoices(user, computer)
-            userArea.classList.toggle(`${result === 'user' ? 'win' : 'loss'}`)
-            computerArea.classList.toggle(`${result === 'computer' ? 'win' : 'loss'}`)
-
-            if (result !== 'tie') {
-                userChoicesContainer.classList.toggle('active')
-            }
-        }, 1500)
-
-        return result
+            setTimeout(function() {
+                result = shoot(user, computer)
+    
+                // call function to change icons, and background
+                // --- colors of player areas if result is NOT a 'tie'
+                appendHandChoices(user, computer)
+                userChoicesContainer.classList.add('active')
+                userHandContainer.classList.remove('active')
+                computerHandContainer.classList.remove('active')
+                if (result !== 'tie') {
+                    roundCount = roundCount - 1
+                    userArea.classList.add(`${result === 'user' ? 'win' : 'loss'}`)
+                    computerArea.classList.add(`${result === 'computer' ? 'win' : 'loss'}`)
+                    console.log(roundCount)
+    
+                    // push winner to the winners array
+                    winners.push(result)
+                }
+            }, 1500)
+        }
     }
 
     let test = document.getElementById('userChoiceButtons')
-    test.addEventListener('click', onClick, true)
 
+    if (roundCount > 0) {
+        test.addEventListener('click', onClick, true)
+    } else {
+        test.removeEventListener
+    }
 }
 
 // Query the absolute.parent and the init container
