@@ -24,18 +24,6 @@ function computerPlay() {
     return choicesArr[num]
 }
 
-function userPlay() {
-    rockButton.addEventListener("click", function() {
-        userChoice = 'rock'
-    })
-    paperButton.addEventListener("click", function() { 
-        userChoice = 'paper'
-    })
-    scissorsButton.addEventListener("click", function() { 
-        userChoice = 'scissors'
-    })
-}
-
 function shoot(userChoice, computerChoice) {
     
     if (userChoice === computerChoice) {
@@ -99,62 +87,9 @@ function userPrompt(roundNum, isTie) {
     }
 }
 
-function getRoundsArr(num) {
-    let arr = []
-    let roundObj = { winner: null, isTie: false }
-
-    for (let i = 0; i < num; i++) {
-        arr.push(roundObj)
-    }
-    return arr
-}
-
-// function startRound(round, roundNum, isTie) {
-//     let result
-    
-//     // get computer and player selections
-//     const computerSelection = computerPlay()
-//     const playerSelection = userPrompt(roundNum, isTie)
-
-//     // once selections are made, SHOOT
-//     result = shoot(computerSelection, playerSelection)
-
-//     if (result !== 'tie') {
-//         return result
-//     } else {
-//         startRound(round, roundNum, true)
-//     }
-// }
-
-function getVictor() {
-    console.log('hdf')
-}
-
-// Add events to user choices
-function getTheChoice(theChoice) {
-    console.log(theChoice)
-    return theChoice
-}
-
-// async function getRoundChoices(round) {
-//     let choices = {
-//         userChoice: '',
-//         computerChoice: computerPlay()
-//     }
-//     buttons.forEach(button => {
-//         button.addEventListener('click', (e) => {
-//             e.stopPropagation()
-//             choices.userChoice = e.target.value
-//         }, true)
-//     })
-//     return choices
-// }
-
 // Swap out the hand icons based on selection
 // --- happens after animation completes
 function appendHandChoices(user, computer) {
-    console.log(user)
-    console.log(computer)
     let userIconIndex = user === 'rock' ? iconsArr[0] : user === 'paper' ? iconsArr[1] : iconsArr[2]
     let computerIconIndex = computer === 'rock' ? iconsArr[0] : computer === 'paper' ? iconsArr[1] : iconsArr[2]
     userHandContainer.innerHTML = userIconIndex
@@ -169,26 +104,16 @@ function setDefault() {
     computerArea.classList.remove('win', 'loss')
     userHandContainer.classList.add('active')
     computerHandContainer.classList.add('active')
-    userChoicesContainer.classList.remove('active')
     userHandContainer.innerHTML = iconsArr[0]
     computerHandContainer.innerHTML = iconsArr[0]
 }
 
 function game(roundCount) {
     // Variables
-    let roundsArr = getRoundsArr(roundCount)
-    let selected = false
-    let gameOver = false
     let answerClicked = false
-    let roundsLeft = roundCount
-    let userChoice
-    let computerChoice
-    let roundResult
     let winners = []
 
     function onClick(e) {
-        // --- copy the roundsArr
-        let copyRoundsArr = roundsArr
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
         answerClicked = true
@@ -271,10 +196,6 @@ radioInputs.forEach(radio => {
 // Query the user choices container
 const userChoicesContainer = document.querySelector('.user-choices.container')
 
-function capture(e) {
-    e.stopPropagation()
-    return e.target.value
-}
 // Query all buttons for user choice
 const buttons = document.querySelectorAll('.btn.user-choice')
 
