@@ -7,6 +7,7 @@ const statusColors = {
 
 // DEFAULT VALUES
 let roundCount
+let userChoice
 
 function computerPlay() {
     let num = Math.floor(Math.random() * 3)
@@ -116,22 +117,65 @@ function game(roundCount) {
     // Variables
     let roundsSet = false
     let roundsArr = getRoundsArr(roundCount)
+    let currentRound = 1
+    let results
     let winner
     let gameOver = false
 
-    // When roundsArr is set with rounds, call function to initialize game prompts
-    let roundResults = roundsArr.map((round, index) => {
+    roundsArr.map((round, index) => {
         let currentRound = index + 1
-        return startRound(round, currentRound, round.isTie)
+        let complete = false
+        userChoice = ''
+
+        if (!complete) {
+            // get choices
+            let computerSelection = computerPlay()
+            let userSelection = getUserSelection()
+            // userChoicesContainer.classList.remove('active')
+            console.log("Hi")
+        }
+        // wait for user selection
+        return 
     })
 
-    winner = checkWinner(roundResults)
+    // for (let i = currentRound - 1; i < roundCount; i++) {
+    //     let complete = false
+        
+    //     // Get choices
+    //     let computerSelection = computerPlay()
+    //     let userSelection = getUserSelection()
+    //     console.log(userChoice)
+        
+    // }
+
+    // Loop for roundCount passed in
+    
+    // Whens roundsArr is set, map through each to play each round
+    // roundsArr.map((round, index) => {
+    //     let currentRound = index + 1
+    //     let complete = false
+
+    //     if (userChoice) {
+    //         userChoicesContainer.classList.remove('active')
+    //         console.log("Hi")
+    //     }
+    //     // wait for user selection
+    //     return 
+    // })
+
+    // When roundsArr is set with rounds, call function to initialize game prompts
+    // let roundResults = roundsArr.map((round, index) => {
+    //     let currentRound = index + 1
+    //     return startRound(round, currentRound, round.isTie)
+    // })
+
+    // winner = checkWinner(roundResults)
 
     // Alert window of winner
-    window.alert(winner)
+    // window.alert(winner)
 
     // Play again?
-    let playAgain = window.prompt('Play again? yes or no', 'no')
+    // let playAgain = window.prompt('Play again? yes or no', 'no')
 
     if (playAgain === 'no') {
         gameOver = true
@@ -140,6 +184,11 @@ function game(roundCount) {
         game()
     }
 
+}
+
+function setUserChoice(choice) {
+    userChoice = choice
+    return
 }
 
 // Query the absolute.parent and the init container
@@ -175,13 +224,24 @@ radioInputs.forEach(radio => {
     })
 })
 
-// Query all buttons
+// Query the user choices container
+const userChoicesContainer = document.querySelector('.user-choices.container')
+
+// Query all buttons for user choice
 const buttons = document.querySelectorAll('.btn.user-choice')
+
+// Function for getting user choice
+// --- loops through user-choice DOM elements, then returns a promise
 buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        console.log(e.target)
+    button.addEventListener('click', function(e) {
+        getUserSelection(button.value)
     })
 })
+
+async function getUserSelection(selection) {
+    console.log(selection)
+    return await selection
+}
 
 // START BUTTON ELEMENT
 const startButton = document.getElementById('start')
@@ -202,6 +262,6 @@ startButton.addEventListener('click', () => {
     // Set timeout to unappend initContainer from DOM
     setTimeout(() => {
         overlayParent.remove()
-    }, 1500);
+    }, 700);
     game(roundCount)
 })
