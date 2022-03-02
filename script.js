@@ -119,8 +119,6 @@ function game(roundCount) {
     let winner
     let gameOver = false
 
-    console.log(absoluteTopHalf)
-
     // When roundsArr is set with rounds, call function to initialize game prompts
     let roundResults = roundsArr.map((round, index) => {
         let currentRound = index + 1
@@ -144,7 +142,8 @@ function game(roundCount) {
 
 }
 
-// Query the init container
+// Query the absolute.parent and the init container
+const overlayParent = document.querySelector('.overlay')
 const initContainer = document.querySelector('.init')
 
 // Query the absolute.half containers
@@ -202,7 +201,7 @@ startButton.addEventListener('click', () => {
 
     // Set timeout to unappend initContainer from DOM
     setTimeout(() => {
-        initContainer.remove()
+        overlayParent.remove()
     }, 1500);
     game(roundCount)
 })
