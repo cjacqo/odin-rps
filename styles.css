@@ -13,21 +13,234 @@ html {
 }
 
 body {
-    position: relative;
-    top: 0;
-    left: 0;
     margin: 0;
     width: 100%;
     height: 100%;
+}
+
+.parent-relative {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex.c {
+    flex-direction: column;
+}
+
+.mont {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.fred {
+    font-family: 'Fredoka', sans-serif;
+}
+
+.btn {
+    background-color: transparent;
+    border: 0;
+}
+
+/* --- REMOVE ARROS AND SPINNERS FROM INPUTS
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:focus {
+    border: none;
+    outline: none;
 }
 
 /*
     Absolutley position the start button to be vertically and horizontally
     centered, relative to the body
 */
-.start-btn.container {
+.absolute.parent,
+.absolute.half {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.absolute.parent {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.325);
+}
+
+.absolute.half.top,
+.absolute.half.bottom {
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #E6EBE0;
+    z-index: 2;
+}
+
+.absolute.half.top {
+    top: 0;
+}
+
+.absolute.half.bottom {
+    bottom: 0;
+}
+
+.init.container {
+    flex: 1;
+    padding: 1.275rem 0.833rem;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+}
+
+.starter-box {
+    flex: 0 1 auto;
+    height: 100%;
+    max-width: 250px;
+    margin: 0.82rem 0;
+    border-radius: 10px;
+    background-color: rgba(2,62,138,1);
+    text-align: center;
+    padding: 0.8rem 2rem;
+    gap: 1.22rem;
+    color: #E6EBE0;
+}
+
+.starter-box > * {
+    flex: 0;
+    justify-content: stretch; 
+    align-items: stretch;
+}
+
+.round-count-input-box {
+    gap: 0.6rem;
+    justify-content: space-between;
+    flex: 2;
+}
+
+.round-count-input-box > p {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+#roundCountInput {
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    height: 75px;
+    width: 75px;
+    font-size: 1.777rem;
+    text-align: center;
+    background-color: rgba(255,255,255,0.25);
+    transition: all 100ms ease-in;
+    cursor: pointer;
+    border-bottom: 5px solid #E6EBE0;
+    color: #fff;
+    display: none;
+}
+
+#roundCountInput::placeholder {
+    color: #fff;
+}
+
+#roundCountInput:focus {
+    background-color: rgba(255,255,255,0.5);
+    transition: all 100ms ease-in;
+}
+
+.start-btn.container {
+    justify-content: flex-end;
+}
+
+.btn#start {
+    padding: 0.5rem 1rem;
+    font-size: 1.44rem;
+    background: #6e6e6e;
+    box-shadow: inset 0.9px 0.9px 36px #434343, inset -0.9px -0.9px 36px #999999;
+    color: #ccc;
+    text-transform: uppercase;
+}
+
+.btn.active#start {
+    color: #fff;
+    background: #429D01;
+    box-shadow: inset 5.71px 5.71px 18px #3B8C01, inset -5.71px -5.71px 18px #49AE01;
+    transition: all 300ms ease-in-out;
+}
+
+.btn.active#start:hover {
+    background: #52AB13;
+    transition: all 300ms ease-in-out;
+}
+
+/* @Animations */
+/* --- animate closing of init container */
+.round-count-input-box.hide {
+    opacity: 0;
+    transition: opacity 250ms ease-out;
+}
+
+.init.container.hide,
+.btn#start.hide {
+    animation-name: scaleDown;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes scaleDown {
+    from {
+        transform: scale(1)
+    }
+    to {
+        transform: scale(0)
+    }
+}
+
+.start-box {
+
+}
+
+.absolute.half.top.closeUp {
+    top: -100%;
+    transition: top 1500ms ease-in-out;
+}
+
+.absolute.half.bottom.closeDown {
+    bottom: -100%;
+    transition: bottom 1500ms ease-in-out;
+}
+
+/*=====================================*/
+/*=====================================*/
+
+
+/* --- GAME AREA --- */
+/*=====================================*/
+/* - Page Title - */
+.page-title.container {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}
+
+.page-title.container > h3 {
+    margin: 0;
+    padding: 0.64rem;
+    font-size: 2.441em;
 }

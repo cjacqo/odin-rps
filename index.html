@@ -4,22 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;700&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
     <title>Odin | Rock Paper Scissors</title>
 </head>
 <body>
+    <div class="relative-parent">
 
-    <div class="start-btn container">
-        <button class="btn" id="start">Start Game</button>
-    </div>
+        <!-- Page Title Container -->
+        <div class="page-title container">
+            <h3 class="title fred">Rock Paper Scissors</h3>
+        </div>
 
-    <div>
-        <button class="btn" id="rock"><i class="fa-solid fa-hand-back-fist"></i></button>
-        <button class="btn" id="paper"><i class="fa-solid fa-hand"></i></button>
-        <button class="btn" id="scissors"><i class="fa-solid fa-hand-peace"></i></button>
+        <!-- Game Page Overlay: Start button -->
+        <div class="absolute parent flex">
+            <div class="absolute half top"></div>
+            <div class="init container flex">
+                <div class="starter-box flex c">
+                    <div class="round-count-input-box flex c">
+                        <p class="mont" for="roundCountInput">Best out of...</p>
+                        <div class="radio-btns container">
+                            <div class="radio-btn">
+                                <label for="boThree">3</label>
+                                <input id="boThree" type="radio" name="round_count" value="3" />
+                                <span class="checkmark"></span>
+                            </div>
+                            <div class="radio-btn">
+                                <label for="boFive">5</label>
+                                <input id="boFive" type="radio" name="round_count" value="5" />
+                                <span class="checkmark"></span>
+                            </div>
+                            <div class="radio-btn">
+                                <label for="boSeven">7</label>
+                                <input id="boSeven" type="radio" name="round_count" value="7" />
+                                <span class="checkmark"></span>
+                            </div>
+                        </div>
+                        <input class="num-input fred" id="roundCountInput" placeholder="..." type="number" name="round_count" />
+                    </div>
+                    <div class="start-btn container flex c">
+                        <button class="btn start-btn wrapper fred disabled" id="start" disabled="disabled">
+                            Start
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute half bottom"></div>
+        </div>
+
+        <div>
+            <button class="btn user-choice" id="rock"><i class="fa-solid fa-hand-back-fist"></i></button>
+            <button class="btn user-choice" id="paper"><i class="fa-solid fa-hand"></i></button>
+            <button class="btn user-choice" id="scissors"><i class="fa-solid fa-hand-peace"></i></button>
+        </div>
     </div>
-    
     <script src='script.js'></script>
 </body>
 </html>

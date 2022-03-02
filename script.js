@@ -1,3 +1,13 @@
+// COLOR PALETTES
+const statusColors = {
+    success: 'rgba(66,157,1,1)',
+    warning: 'rgba(250,210,2,1)',
+    error  : 'rgba(234,22,1,1)'
+}
+
+// DEFAULT VALUES
+let roundCount
+
 function computerPlay() {
     let num = Math.floor(Math.random() * 3)
     
@@ -102,26 +112,14 @@ function startRound(round, roundNum, isTie) {
     }
 }
 
-function game() {
+function game(roundCount) {
     // Variables
     let roundsSet = false
-    let roundsArr = []
+    let roundsArr = getRoundsArr(roundCount)
     let winner
     let gameOver = false
 
-    // Have user input number of rounds
-    // --- confirms that user input matches condition. Will not continue
-    //     till met
-    do {
-        let num = window.prompt('How many rounds would you like to play? (min 1 / max 10)')
-
-        if (num >= 1 && num <= 10) {
-            roundsSet = true
-            roundsArr = getRoundsArr(num)
-        } else {
-            window.alert('Number of rounds MUST be between 1 and 10')
-        }
-    } while (!roundsSet)
+    console.log(absoluteTopHalf)
 
     // When roundsArr is set with rounds, call function to initialize game prompts
     let roundResults = roundsArr.map((round, index) => {
@@ -146,23 +144,65 @@ function game() {
 
 }
 
-// game()
+// Query the init container
+const initContainer = document.querySelector('.init')
 
-// Query all buttons and loop over to add appropriate eventListener
-const buttons = document.querySelectorAll('.btn')
-buttons.forEach(button => {
-    // get 'id' of button to determine what event listener to add
-    let id = button.getAttribute('id')
-    
-    if (id === 'start') {
-        button.addEventListener('click', () => {
-            game()
-        })
-    } else {
-        button.addEventListener('click', () => {
-            console.log(id)
-        })
-    }
+// Query the absolute.half containers
+// --- these containers open up (top goes up, bottom goes down)
+//     once the 'Start Game' button is clicked
+const absoluteTopHalf = document.querySelector('.absolute.half.top')
+const absoluteBottomHalf = document.querySelector('.absolute.half.bottom')
+
+// Query the start button container
+// --- this is the blue/purple container with the
+//     radio inputs and 'Start Game' button
+const startBtnCont = document.querySelector('.start-btn.container')
+
+// Query the section that contains the 'Best out of...' prompt, and the
+// --- radio buttons
+const promptOne = document.querySelector('.round-count-input-box')
+
+// Query all radio inputs
+// --- then loop over each radioInput
+//     + when a input is selected, the startButton styles to 'activate'
+//       button are applie
+const radioInputs = document.querySelectorAll(`input[type='radio']`)
+radioInputs.forEach(radio => {
+    radio.addEventListener('click', function(e) {
+        startButton.classList.add('active')
+        startButton.disabled = false
+        startButton.style.cursor = 'pointer'
+        roundCount = e.target.value
+    })
 })
 
-console.log(buttons)
+// Query all buttons
+const buttons = document.querySelectorAll('.btn.user-choice')
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        console.log(e.target)
+    })
+})
+
+// START BUTTON ELEMENT
+const startButton = document.getElementById('start')
+
+// ** LISTEN: click to start game
+startButton.addEventListener('click', () => {
+    // Add classes to animate/hide...
+    // --- promptOne: contains the 'Best out of...' prompt
+    promptOne.classList.add('hide')
+    // --- absolute...Half containers to animate
+    absoluteTopHalf.classList.add('closeUp')
+    absoluteBottomHalf.classList.add('closeDown')
+    // --- startButton
+    startButton.classList.add('hide')
+    // --- initContainer
+    initContainer.classList.add('hide')
+
+    // Set timeout to unappend initContainer from DOM
+    setTimeout(() => {
+        initContainer.remove()
+    }, 1500);
+    game(roundCount)
+})
