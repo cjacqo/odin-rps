@@ -292,19 +292,62 @@ input:focus {
 }
 
 .player-area.container {
-    padding: 0.75rem;
-    justify-content: center;
+    position: relative;
+    justify-content: flex-start;
     align-items: center;
 }
 
-.absolute.dashed-line {
+.lives.container {
+
+}
+
+.hand-area.container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.hand-area > i {
+    font-size: 6.172rem;
+}
+
+/* - transform computerHand icons */
+#computerHand > .fa-hand-back-fist {
+    transform: scaleX(-1) rotate(90deg);
+}
+
+.absolute.dashed-line,
+.absolute.round-counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.absolute.dashed-line {
     height: 98%;
     border: 5px dashed rgba(255,255,255,0.45);
     border-width: 10px;
+}
+
+.absolute.round-counter {
+    text-align: center;
+    background: #caf0f4;
+    border-radius: 100%;
+    box-shadow: inset 5.71px 5.71px 23px #B6D8DC, inset -5.71px -5.71px 23px #deffffde;
+    padding: 2.5rem;
+    color: rgb(0, 150, 199);
+}
+
+.absolute.round-counter > * {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 400;
+}
+
+.absolute.round-counter > .round-num {
+    font-weight: bolder !important;
 }
 
 /* - user choices */
