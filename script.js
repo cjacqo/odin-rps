@@ -239,7 +239,6 @@ buttons.forEach(button => {
 })
 
 async function getUserSelection(selection) {
-    console.log(selection)
     return await selection
 }
 
