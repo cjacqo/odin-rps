@@ -133,6 +133,13 @@ function getOccurence(arr, val) {
     return arr.filter((v) => (v === val)).length
 }
 
+function endGame() {
+    roundCountText.remove()
+    // --- set text of center circle to say "GAME OVER"
+    let centerCircleText = "GAME OVER"
+    roundTopText.innerHTML = centerCircleText
+}
+
 function game(roundCount) {
     // Variables
     let answerClicked = false
@@ -208,10 +215,12 @@ function game(roundCount) {
                             gameOver = true
                             console.log("YOU WON!")
                             winner = 'user'
+                            endGame()
                         } else if (computerWins > userWins && remainingRounds < computerWins) {
                             gameOver = true
                             console.log("You lost ):")
                             winner = 'computer'
+                            endGame()
                         }
                     }
                 }
@@ -305,6 +314,8 @@ const computerArea = document.getElementById('computerArea')
 const userHandContainer = document.getElementById('userHand')
 const computerHandContainer = document.getElementById('computerHand')
 
+// Query for round text container
+const roundTopText = document.getElementById('roundTxt')
 // Query for round count h4
 const roundCountText = document.getElementById('currentRound')
 
