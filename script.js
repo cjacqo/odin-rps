@@ -129,12 +129,18 @@ function createIconDiv(count) {
     return livesParent
 }
 
+function getOccurence(arr, val) {
+    return arr.filter((v) => (v === val)).length
+}
+
 function game(roundCount) {
     // Variables
     let answerClicked = false
     let winners = []
     let userLives = []
     let computerLives = []
+    let totalRounds = roundCount
+    let winner
 
     // create lives containers
     let theUsersLives = document.createElement("div")
@@ -149,12 +155,8 @@ function game(roundCount) {
     userLivesContainer.appendChild(userLivesParent)
     computerLivesContainer.appendChild(computerLivesParent)
 
-    // let parentDiv = createIconDiv(roundCount)
-    // computerLivesContainer.appendChild(parentDiv)
-
-    // userArea.appendChild(theUsersLives)
-    
     function onClick(e) {
+        let gameOver = false
         // --- sets the user choice and computer choice
         //      !!! needs to fix propagation of child elements
         answerClicked = true
@@ -163,7 +165,7 @@ function game(roundCount) {
 
         // --- check that all the rounds have been played
         //     if yes, remove eventListener
-        if (roundCount === 0) {
+        if (roundCount === 0 || gameOver) {
             test.removeEventListener('click', onClick)
             return
         } else {
@@ -180,17 +182,38 @@ function game(roundCount) {
                 userHandContainer.classList.remove('active')
                 computerHandContainer.classList.remove('active')
                 if (result !== 'tie') {
+                    // --- subtract 1 from the roundCount
+                    roundCount = roundCount - 1
+                    // --- set round number from roundCount value on page
                     let currentRound = parseInt(roundCountText.innerHTML)
-                    console.log(currentRound)
-                    // --- set round number from roundCount
                     roundCountText.innerHTML = currentRound + 1
                     
                     userArea.classList.add(`${result === 'user' ? 'win' : 'loss'}`)
                     computerArea.classList.add(`${result === 'computer' ? 'win' : 'loss'}`)
-                    console.log(roundCount)
-    
+
                     // push winner to the winners array
                     winners.push(result)
+
+                    // run a check to see if the game should end
+                    if (currentRound > Math.floor(totalRounds / 2)) {
+                        // -- variables for tracking counts of wins
+                        //    and remaining rounds
+                        let userWins = getOccurence(winners, 'user')
+                        let computerWins = getOccurence(winners, 'computer')
+
+                        let totalWins = userWins + computerWins
+                        let remainingRounds = totalRounds - totalWins
+
+                        if (userWins > computerWins && remainingRounds < userWins) {
+                            gameOver = true
+                            console.log("YOU WON!")
+                            winner = 'user'
+                        } else if (computerWins > userWins && remainingRounds < computerWins) {
+                            gameOver = true
+                            console.log("You lost ):")
+                            winner = 'computer'
+                        }
+                    }
                 }
             }, 1500)
         }
@@ -201,7 +224,7 @@ function game(roundCount) {
     if (roundCount > 0) {
         test.addEventListener('click', onClick, true)
     } else {
-        test.removeEventListener
+        test.removeEventListener('click', onClick)
     }
 }
 
